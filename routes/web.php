@@ -13,14 +13,12 @@
 
 use Illuminate\Http\Request;
 
-Route::get('/', 'FormController@show');
+Route::get('/', 'ParticipantController@create');
+Route::get('/list', 'ParticipantController@index');
+Route::get('/addition', 'ParticipantController@edit');
 
-Route::get('/list', 'ParticipantController@show');
-
-Route::post('/form', function (Request $request) {
-    $countries = Countries::all()->pluck('name.common');
-    return view('form', ['countries' => $countries]);
-});
+Route::post('/participant/store', 'ParticipantController@store');
+Route::post('/participant/update', 'ParticipantController@update');
 
 Auth::routes();
 
