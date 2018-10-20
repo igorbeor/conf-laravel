@@ -20,7 +20,7 @@ class StoreParticipantRequest extends FormRequest
             'report_subject' => 'required|between:10,255',
             'country' => 'required|between:2,100',
             'phone' => 'required|regex:/^(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})/',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:participant,email'
 //            'company' => 'alpha_num|between:2,50',
 //            'position' => 'required|alpha|between:2,50',
 //            'about_me' => 'required|between:10,255',

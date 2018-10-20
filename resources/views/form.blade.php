@@ -11,7 +11,7 @@
         </a>
     </div>
     <div class="container">
-        <form id="form" action="" method="post">
+        <form id="form" action="/participant/store" method="post">
 
             {!! csrf_field() !!}
             <div class="form-group row{{ $errors->has('first_name') ? ' has-error' : '' }}">
