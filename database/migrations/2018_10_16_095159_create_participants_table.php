@@ -26,6 +26,7 @@ class CreateParticipantsTable extends Migration
             $table->string('position')->nullable();
             $table->text('about_me')->nullable();
             $table->string('photo')->nullable();
+            $table->boolean('hidden')->default(false);
             $table->timestamps();
         });
     }

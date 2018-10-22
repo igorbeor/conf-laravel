@@ -10,58 +10,59 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+        <link href="/css/app.css" rel="stylesheet">
+        {{--<style>--}}
+            {{--html, body {--}}
+                {{--background-color: #fff;--}}
+                {{--color: #636b6f;--}}
+                {{--font-family: 'Nunito', sans-serif;--}}
+                {{--font-weight: 200;--}}
+                {{--height: 100vh;--}}
+                {{--margin: 0;--}}
+            {{--}--}}
 
-            .full-height {
-                height: 100vh;
-            }
+            {{--.full-height {--}}
+                {{--height: 100vh;--}}
+            {{--}--}}
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+            {{--.flex-center {--}}
+                {{--align-items: center;--}}
+                {{--display: flex;--}}
+                {{--justify-content: center;--}}
+            {{--}--}}
 
-            .position-ref {
-                position: relative;
-            }
+            {{--.position-ref {--}}
+                {{--position: relative;--}}
+            {{--}--}}
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+            {{--.top-right {--}}
+                {{--position: absolute;--}}
+                {{--right: 10px;--}}
+                {{--top: 18px;--}}
+            {{--}--}}
 
-            .content {
-                text-align: center;
-            }
+            {{--.content {--}}
+                {{--text-align: center;--}}
+            {{--}--}}
 
-            .title {
-                font-size: 84px;
-            }
+            {{--.title {--}}
+                {{--font-size: 84px;--}}
+            {{--}--}}
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+            {{--.links > a {--}}
+                {{--color: #636b6f;--}}
+                {{--padding: 0 25px;--}}
+                {{--font-size: 12px;--}}
+                {{--font-weight: 600;--}}
+                {{--letter-spacing: .1rem;--}}
+                {{--text-decoration: none;--}}
+                {{--text-transform: uppercase;--}}
+            {{--}--}}
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+            {{--.m-b-md {--}}
+                {{--margin-bottom: 30px;--}}
+            {{--}--}}
+        {{--</style>--}}
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -79,11 +80,7 @@
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
+            <div class="container">
                 {{--<div class="links">--}}
                     {{--<a href="https://laravel.com/docs">Documentation</a>--}}
                     {{--<a href="https://laracasts.com">Laracasts</a>--}}
@@ -92,12 +89,26 @@
                     {{--<a href="https://forge.laravel.com">Forge</a>--}}
                     {{--<a href="https://github.com/laravel/laravel">GitHub</a>--}}
                 {{--</div>--}}
-                <table>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Report subject</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
                     @foreach($participants as $participant)
                         <tr>
                             <td>{{ $participant->first_name . $participant->last_name }}</td>
                             <td>{{ $participant->report_subject }}</td>
                             <td>{{ $participant->email }}</td>
+                            <td>
+                                @auth
+                                    @if ( Auth::user()->isAdmin() )
+                                        <input class="form-check-input" type="checkbox" value="">
+                                    @endif
+                                @endauth
+                            </td>
                         </tr>
                     @endforeach
                 </table>

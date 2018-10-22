@@ -11,7 +11,7 @@
         </a>
     </div>
     <div class="container">
-        <form id="form" action="/participant/store" method="post">
+        <form id="form">
 
             {!! csrf_field() !!}
             <div class="form-group row{{ $errors->has('first_name') ? ' has-error' : '' }}">
@@ -140,4 +140,7 @@
             var marker = new google.maps.Marker({position: uluru, map: map});
         }
     </script>
+    {{--<script>--}}
+        {{----}}
+    {{--</script>--}}
 @endsection

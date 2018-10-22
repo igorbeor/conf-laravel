@@ -19,6 +19,7 @@
         "popper.js": "^1.12"
     },
     "dependencies": {
+        "jquery-validation": "^1.18.0",
         "validate.js": "^0.12.0"
     }
 }

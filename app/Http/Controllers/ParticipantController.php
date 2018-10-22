@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
 use App\Participant;
+use App\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PragmaRX\Countries\Package\Countries;
 
 class ParticipantController extends Controller
@@ -37,7 +40,7 @@ class ParticipantController extends Controller
         $p->email = $data['email'];
 
         $p->save();
-//        return redirect('/addition')->with(['email' => $data['email']]);
+//        return redirect('/');
     }
 
     function update(UpdateParticipantRequest $request) {
