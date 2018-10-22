@@ -88,8 +88,8 @@
     </div>
 
 
-    <div class="container" hidden>
-        <form id="additional" action="/participant/update" method="post">
+    <div class="container">
+        <form id="additional" action="/participant/update" method="post" style="display: none;">
             {!! csrf_field() !!}
             <div class="form-group row{{ $errors->has('company') ? ' has-error' : '' }}">
                 <label class="col-sm-2" for="company">Company</label>
@@ -110,7 +110,7 @@
             </div>
 
             <div class="form-group row{{ $errors->has('about_me') ? ' has-error' : '' }}">
-                <label class="col-sm-2" for="about_me">First name</label>
+                <label class="col-sm-2" for="about_me">About me</label>
                 <textarea class="form-control col-sm-10" id="about_me" name="about_me">{{ old('about_me') }}</textarea>
                 @if($errors->has('about_me'))
                     <span class="help-block">{{ $errors->first('about_me') }}</span>
@@ -140,7 +140,4 @@
             var marker = new google.maps.Marker({position: uluru, map: map});
         }
     </script>
-    {{--<script>--}}
-        {{----}}
-    {{--</script>--}}
 @endsection

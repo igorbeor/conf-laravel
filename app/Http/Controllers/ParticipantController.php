@@ -31,6 +31,7 @@ class ParticipantController extends Controller
     function store(StoreParticipantRequest $request) {
         $data = $request->validated();
         $p = new Participant;
+//        Participant::create($data->all());
         $p->first_name = $data['first_name'];
         $p->last_name = $data['last_name'];
         $p->birthdate = $data['birthdate'];
@@ -40,7 +41,6 @@ class ParticipantController extends Controller
         $p->email = $data['email'];
 
         $p->save();
-//        return redirect('/');
     }
 
     function update(UpdateParticipantRequest $request) {
