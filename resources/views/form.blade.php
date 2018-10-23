@@ -3,12 +3,14 @@
 
     <div id="map"></div>
     <div class="container">
-        <h2>To participate in the conference, please fill out the form</h2>
-        <a href="/list">All members
-            <span class="badge badge-secondary">
-            {{ $pcount }}
-        </span>
-        </a>
+        <h2 class="headline">To participate in the conference, please fill out the form</h2>
+        <div class="count">
+            <a href="/list">All members
+                <span class="badge badge-secondary">
+                    {{ $pcount }}
+                </span>
+            </a>
+        </div>
     </div>
     <div class="container">
         <form id="form">
@@ -35,7 +37,7 @@
             <div class="form-group row{{ $errors->has('birthdate') ? ' has-error' : '' }}">
                 <label class="col-sm-2" for="birthdate">Birthdate</label>
                 <input type="date" class="form-control col-sm-10" id="birthdate" name="birthdate"
-                       value="{{ old('birthdate') }}">
+                       value="{{ old('birthdate') }}" max="{{ date('Y-m-d') }}">
                 @if($errors->has('birthdate'))
                     <span class="help-block">{{ $errors->first('birthdate') }}</span>
                 @endif
@@ -125,11 +127,33 @@
                 @endif
             </div>
 
+            <input type="email" id="additional-email" name="additional-email" hidden>
+
             <div class="row justify-content-md-end">
                 <button type="submit" class="btn btn-default">Next</button>
             </div>
 
         </form>
+        <div class="container" id="social-networks" style="display: none;">
+            <div class="d-flex flex-row justify-content-center">
+                <div class="p-2">
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/"
+                         data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank"
+                                                                                             href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                                                                                             class="fb-xfbml-parse-ignore">Поделиться</a>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <a class="twitter-share-button"
+                       href="https://twitter.com/intent/tweet?text=Check out this Meetup with SoCal AngularJS!"
+                       data-size="large">
+                        Tweet</a>
+                </div>
+                <div class="p-2">
+                    <div class="g-plus" data-action="share" data-height="24"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>

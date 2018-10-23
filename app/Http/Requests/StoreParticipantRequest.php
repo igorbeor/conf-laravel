@@ -19,12 +19,9 @@ class StoreParticipantRequest extends FormRequest
             'birthdate' => 'required|date|after:01-01-1900|before:today',
             'report_subject' => 'required|between:10,255',
             'country' => 'required|between:2,100',
-            'phone' => 'required', // array('phone' => 'required', 'required|regex:/^\+?[^a-zA-Z]{5,}$/'),
+            'phone' => array('required', 'regex:/^\+?[^a-zA-Z]{5,}$/'),
             'email' => 'required|email|unique:participants,email'
-//            'company' => 'alpha_num|between:2,50',
-//            'position' => 'required|alpha|between:2,50',
-//            'about_me' => 'required|between:10,255',
-//            'photo' => 'image'
+
         ];
     }
 }

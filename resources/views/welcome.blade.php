@@ -1,118 +1,91 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+    <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-        <!-- Styles -->
-        <link href="/css/app.css" rel="stylesheet">
-        {{--<style>--}}
-            {{--html, body {--}}
-                {{--background-color: #fff;--}}
-                {{--color: #636b6f;--}}
-                {{--font-family: 'Nunito', sans-serif;--}}
-                {{--font-weight: 200;--}}
-                {{--height: 100vh;--}}
-                {{--margin: 0;--}}
-            {{--}--}}
+    <!-- Styles -->
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-dark bg-dark">
+        @if (Route::has('login'))
 
-            {{--.full-height {--}}
-                {{--height: 100vh;--}}
-            {{--}--}}
-
-            {{--.flex-center {--}}
-                {{--align-items: center;--}}
-                {{--display: flex;--}}
-                {{--justify-content: center;--}}
-            {{--}--}}
-
-            {{--.position-ref {--}}
-                {{--position: relative;--}}
-            {{--}--}}
-
-            {{--.top-right {--}}
-                {{--position: absolute;--}}
-                {{--right: 10px;--}}
-                {{--top: 18px;--}}
-            {{--}--}}
-
-            {{--.content {--}}
-                {{--text-align: center;--}}
-            {{--}--}}
-
-            {{--.title {--}}
-                {{--font-size: 84px;--}}
-            {{--}--}}
-
-            {{--.links > a {--}}
-                {{--color: #636b6f;--}}
-                {{--padding: 0 25px;--}}
-                {{--font-size: 12px;--}}
-                {{--font-weight: 600;--}}
-                {{--letter-spacing: .1rem;--}}
-                {{--text-decoration: none;--}}
-                {{--text-transform: uppercase;--}}
-            {{--}--}}
-
-            {{--.m-b-md {--}}
-                {{--margin-bottom: 30px;--}}
-            {{--}--}}
-        {{--</style>--}}
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a href="{{ url('/') }}" class="nav-link">Form</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">{{ csrf_field() }}</form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                @endauth
+            </ul>
+        @endif
+    </nav>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Report subject</th>
+            <th>Email</th>
+            @auth
+                @if ( Auth::user()->isAdmin() )
+                    <th>Hidden</th>
+                @endif
+            @endauth
+        </tr>
+        </thead>
+        @auth
+            @if ( Auth::user()->isAdmin() )
+                @foreach($participants as $participant)
+                    <tr>
+                        <td>
+                            <img class="photo"
+                                 src="/storage/photos/{{ isset($participant->photo) ? $participant->photo : 'default.png' }}">
+                        </td>
+                        <td>{{ $participant->first_name . $participant->last_name }}</td>
+                        <td>{{ $participant->report_subject }}</td>
+                        <td class="email">{{ $participant->email }}</td>
+                        <td>
+                            <input type="checkbox" {{ $participant->hidden ? "checked" : "" }}>
+                        </td>
+                    </tr>
+                @endforeach
             @endif
-
-            <div class="container">
-                {{--<div class="links">--}}
-                    {{--<a href="https://laravel.com/docs">Documentation</a>--}}
-                    {{--<a href="https://laracasts.com">Laracasts</a>--}}
-                    {{--<a href="https://laravel-news.com">News</a>--}}
-                    {{--<a href="https://nova.laravel.com">Nova</a>--}}
-                    {{--<a href="https://forge.laravel.com">Forge</a>--}}
-                    {{--<a href="https://github.com/laravel/laravel">GitHub</a>--}}
-                {{--</div>--}}
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Report subject</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    @foreach($participants as $participant)
-                        <tr>
-                            <td>{{ $participant->first_name . $participant->last_name }}</td>
-                            <td>{{ $participant->report_subject }}</td>
-                            <td>{{ $participant->email }}</td>
-                            <td>
-                                @auth
-                                    @if ( Auth::user()->isAdmin() )
-                                        <input class="form-check-input" type="checkbox" value="">
-                                    @endif
-                                @endauth
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
-    </body>
+        @else
+            @foreach($participants as $participant)
+                @if ($participant->hidden == 0)
+                    <tr>
+                        <td>
+                            <img class="photo"
+                                 src="/storage/photos/{{ isset($participant->photo) ? $participant->photo : 'default.png' }}">
+                        </td>
+                        <td>{{ $participant->first_name . $participant->last_name }}</td>
+                        <td>{{ $participant->report_subject }}</td>
+                        <td class="email">{{ $participant->email }}</td>
+                    </tr>
+                @endif
+            @endforeach
+        @endauth
+    </table>
+</div>
+</body>
+<script src="{{ asset('js/submit.js') }}"></script>
 </html>

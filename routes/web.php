@@ -19,6 +19,11 @@ Route::get('/addition', 'ParticipantController@edit');
 
 Route::post('/participant/store', 'ParticipantController@store');
 Route::post('/participant/update', 'ParticipantController@update');
+Route::post('/hide', 'ParticipantController@hide');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

@@ -10477,3 +10477,16 @@ a.text-dark:focus {
   width: 100%;
 }
 
+.headline {
+  margin-top: 20px;
+}
+
+.count {
+  margin: 15px auto;
+}
+
+img.photo {
+  max-width: 100px;
+  height: auto;
+}
+

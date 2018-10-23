@@ -14,10 +14,11 @@ class UpdateParticipantRequest extends FormRequest
     public function rules()
     {
         return [
-            'company' => 'alpha_num|between:2,50',
-            'position' => 'required|alpha|between:2,50',
-            'about_me' => 'required|between:10,255',
-            'photo' => 'image'
+            'company' => 'nullable|between:2,50',
+            'position' => 'nullable|between:2,50',
+            'about_me' => 'nullable|between:10,255',
+            'photo' => 'nullable',
+            'additional-email' => 'nullable|email'
         ];
     }
 }

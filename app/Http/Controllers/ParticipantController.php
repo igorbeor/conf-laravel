@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
 use App\Participant;
-use App\User;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use PragmaRX\Countries\Package\Countries;
 
 class ParticipantController extends Controller
@@ -21,7 +18,7 @@ class ParticipantController extends Controller
     function create() {
         $countries = new Countries;
         $countries = $countries->all()->pluck('name.common')->toArray();
-        return view('form', ['countries' => $countries, 'pcount' => Participant::all()->count()]);
+        return view('form', ['countries' => $countries, 'pcount' => Participant::where('hidden', '0')->count()]);
     }
 
     function edit() {
@@ -31,7 +28,6 @@ class ParticipantController extends Controller
     function store(StoreParticipantRequest $request) {
         $data = $request->validated();
         $p = new Participant;
-//        Participant::create($data->all());
         $p->first_name = $data['first_name'];
         $p->last_name = $data['last_name'];
         $p->birthdate = $data['birthdate'];
@@ -45,12 +41,31 @@ class ParticipantController extends Controller
 
     function update(UpdateParticipantRequest $request) {
         $data = $request->validated();
-        $email = $data['email'];
+        $file_name = Null;
+        if ($request->hasFile('photo')) {
+            $request->file('photo')->store('photos');
+            $file_name = $request->file('photo')->hashName();
+        }
+        $email = $data['additional-email'];
         $p = Participant::where('email', $email)->first();
         $p->company = $data['company'];
         $p->position = $data['position'];
         $p->about_me = $data['about_me'];
-//        $p->photo = $data['photo'];
+        $p->photo = $file_name;
+
+        $p->save();
+    }
+
+    function hide(Request $request) {
+        $email = $request->email;
+        $p = Participant::where('email', $email)->first();
+
+        if($p->hidden == 1){
+            $p->hidden = 0;
+        } else {
+            $p->hidden = 1;
+        }
+
 
         $p->save();
     }

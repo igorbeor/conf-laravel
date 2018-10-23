@@ -17,6 +17,7 @@ class Participant extends Model
         'company',
         'position',
         'about_me',
-        'photo'
+        'photo',
+        'hidden'
     ];
 }
