@@ -58,7 +58,7 @@
                     <tr>
                         <td>
                             <img class="photo"
-                                 src="/storage/photos/{{ isset($participant->photo) ? $participant->photo : 'default.png' }}">
+                                 src="{{ isset($participant->photo) ? asset("storage/photos/{$participant->photo}") : asset('storage/photos/default.png') }}">
                         </td>
                         <td>{{ $participant->first_name . $participant->last_name }}</td>
                         <td>{{ $participant->report_subject }}</td>
@@ -75,9 +75,9 @@
                     <tr>
                         <td>
                             <img class="photo"
-                                 src="/storage/photos/{{ isset($participant->photo) ? $participant->photo : 'default.png' }}">
+                                 src="{{ isset($participant->photo) ? asset("storage/photos/{$participant->photo}") : asset('storage/photos/default.png') }}">
                         </td>
-                        <td>{{ $participant->first_name . $participant->last_name }}</td>
+                        <td>{{ $participant->first_name . " " . $participant->last_name }}</td>
                         <td>{{ $participant->report_subject }}</td>
                         <td class="email">{{ $participant->email }}</td>
                     </tr>
