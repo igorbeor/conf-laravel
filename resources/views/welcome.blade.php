@@ -62,7 +62,7 @@
                         </td>
                         <td>{{ $participant->first_name . $participant->last_name }}</td>
                         <td>{{ $participant->report_subject }}</td>
-                        <td class="email">{{ $participant->email }}</td>
+                        <td class="email"><a href="mailto:{{ $participant->email }}">{{ $participant->email }}</a></td>
                         <td>
                             <input type="checkbox" {{ $participant->hidden ? "checked" : "" }}>
                         </td>

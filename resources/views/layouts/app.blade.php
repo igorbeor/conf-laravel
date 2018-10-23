@@ -57,6 +57,7 @@
             @yield('content')
         </main>
     </div>
+    <footer class="container"></footer>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuzn53uK3Tdwsbsh8nvirLVwLS2H-3YbM&callback=initMap"
             type="text/javascript"></script>
 </body>
