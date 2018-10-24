@@ -87,5 +87,4 @@
     </table>
 </div>
 </body>
-<script src="{{ asset('js/submit.js') }}"></script>
 </html>

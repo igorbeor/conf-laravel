@@ -1,3 +1,5 @@
+import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;

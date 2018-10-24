@@ -13,13 +13,15 @@
 
 use Illuminate\Http\Request;
 
-Route::get('/', 'ParticipantController@create');
+Route::get('/', function() {
+    return view('form');
+});
 Route::get('/list', 'ParticipantController@index');
-Route::get('/addition', 'ParticipantController@edit');
+//Route::get('/addition', 'ParticipantController@edit');
 
 Route::post('/participant/store', 'ParticipantController@store');
 Route::post('/participant/update', 'ParticipantController@update');
-Route::post('/hide', 'ParticipantController@hide');
+//Route::post('/hide', 'ParticipantController@hide');
 
 Auth::routes();
 
