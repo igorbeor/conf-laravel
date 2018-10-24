@@ -16,17 +16,18 @@ use Illuminate\Http\Request;
 Route::get('/', function() {
     return view('form');
 });
-Route::get('/list', 'ParticipantController@index');
-//Route::get('/addition', 'ParticipantController@edit');
 
-Route::post('/participant/store', 'ParticipantController@store');
-Route::post('/participant/update', 'ParticipantController@update');
-//Route::post('/hide', 'ParticipantController@hide');
+// API
+Route::prefix('api')->group(function() {
+    Route::get('/list', 'ParticipantController@index');
+    Route::post('/participant/store', 'ParticipantController@store');
+    Route::post('/participant/update', 'ParticipantController@update');
+});
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index')->name('home');
+//
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index')->name('home');

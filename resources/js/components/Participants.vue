@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-flex lg8>
+        <v-flex lg8 offset-lg2>
             <v-card>
                 <v-data-table
                         :headers="headers"
@@ -49,7 +49,7 @@
         methods: {
             getParticipants()
             {
-                axios.get('/list')
+                axios.get('/api/list')
                     .then(response => {
                         console.log(response);
                         this.participants = response.data;

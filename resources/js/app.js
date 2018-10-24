@@ -7,9 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import Vuetify from 'vuetify'
+import Vuetify from 'vuetify';
+import VueRouter from 'vue-router';
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
+Vue.use(VueRouter);
 
 Vue.config.devtools = true;
 Vue.config.performance = true;
@@ -20,14 +22,26 @@ Vue.config.performance = true;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import App from './components/ExampleComponent.vue';
+import App from './components/App.vue';
 import Participants from './components/Participants.vue';
+import Test from './components/Test.vue';
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/participants',
+            component: Participants,
+        },
+        {
+            path: '/test',
+            component: Test,
+        }
+    ],
+});
 
 const app = new Vue({
     el: '#app',
-    components: {
-        App,
-        Participants
-    },
-    render: h => h(Participants)
+    render: h => h(App),
+    router
 });
