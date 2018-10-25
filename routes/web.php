@@ -13,9 +13,10 @@
 
 use Illuminate\Http\Request;
 
-Route::get('/', function() {
+//Route::get('/{any}', 'ParticipantController@index')->where('any', '.*');
+Route::get('/{any}', function() {
     return view('form');
-});
+})->where('any', '[a-zA-Z]*');
 
 // API
 Route::prefix('api')->group(function() {

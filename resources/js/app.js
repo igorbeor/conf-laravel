@@ -3,15 +3,16 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 require('./bootstrap');
 
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
+Vue.use(Vuex);
 
 Vue.config.devtools = true;
 Vue.config.performance = true;
@@ -21,14 +22,21 @@ Vue.config.performance = true;
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 import App from './components/App.vue';
+import Form from './components/Form.vue';
 import Participants from './components/Participants.vue';
 import Test from './components/Test.vue';
+// Vue.component('app', './components/Form.vue');
+// Vue.component('participants', './components/Participants.vue');
+// Vue.component('test', './components/Test.vue');
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        {
+            path: '/',
+            component: Form,
+        },
         {
             path: '/participants',
             component: Participants,
@@ -42,6 +50,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
+    store,
     render: h => h(App),
     router
 });

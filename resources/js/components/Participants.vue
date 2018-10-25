@@ -4,16 +4,26 @@
             <v-card>
                 <v-data-table
                         :headers="headers"
-                        :items="participants">
+                        :items="participants"
+                        hide-actions>
                     <template slot="items" slot-scope="props">
                         <td>
                             <v-avatar>
-                                <img src="/storage/photos/default.png">
+                                <img v-bind:src="`/storage/photos/${ props.item.photo != null ? props.item.photo : 'default.png' }`">
                             </v-avatar>
                         </td>
                         <td>{{ props.item.first_name + ' ' + props.item.last_name }}</td>
                         <td>{{ props.item.report_subject }}</td>
                         <td>{{ props.item.email }}</td>
+                    </template>
+                    <template slot="footer">
+                        <td>
+                            <router-link to="/">
+                                <v-flex justify-center>
+                                <v-icon large>chevron_left</v-icon>
+                                </v-flex>
+                            </router-link>
+                        </td>
                     </template>
                 </v-data-table>
             </v-card>
@@ -49,13 +59,16 @@
         methods: {
             getParticipants()
             {
+                const headers = {
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                }
                 axios.get('/api/list')
                     .then(response => {
                         console.log(response);
                         this.participants = response.data;
                     })
                     .catch(error => {
-
+                        console.log(error);
                     })
 
             }
