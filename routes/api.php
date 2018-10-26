@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/list', 'ParticipantController@index');
+Route::post('/participant/store', 'ParticipantController@store');
+Route::post('/participant/update', 'ParticipantController@update');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

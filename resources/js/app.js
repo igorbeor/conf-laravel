@@ -8,11 +8,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
-import Vuex from 'vuex';
+import store from './store';
+
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
-Vue.use(Vuex);
 
 Vue.config.devtools = true;
 Vue.config.performance = true;

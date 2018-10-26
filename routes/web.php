@@ -18,13 +18,6 @@ Route::get('/{any}', function() {
     return view('form');
 })->where('any', '[a-zA-Z]*');
 
-// API
-Route::prefix('api')->group(function() {
-    Route::get('/list', 'ParticipantController@index');
-    Route::post('/participant/store', 'ParticipantController@store');
-    Route::post('/participant/update', 'ParticipantController@update');
-});
-
 //Auth::routes();
 //
 //Route::get('/home', 'HomeController@index')->name('home');
