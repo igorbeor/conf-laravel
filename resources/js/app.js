@@ -8,14 +8,16 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
-import store from './store';
+import Vuelidate from 'vuelidate';
+import { store } from './store';
 
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
+Vue.use(Vuelidate);
 
-Vue.config.devtools = true;
-Vue.config.performance = true;
+Vue.config.devtools = process.env.NODE_ENV !== 'production';
+Vue.config.performance = process.env.NODE_ENV !== 'production';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

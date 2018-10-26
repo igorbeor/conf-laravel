@@ -4,7 +4,7 @@
             <v-card>
                 <v-data-table
                         :headers="headers"
-                        :items="participants"
+                        :items="getParticipants"
                         hide-actions>
                     <template slot="items" slot-scope="props">
                         <td>
@@ -20,7 +20,7 @@
                         <td>
                             <router-link to="/">
                                 <v-flex justify-center>
-                                <v-icon large>chevron_left</v-icon>
+                                    <v-icon large>chevron_left</v-icon>
                                 </v-flex>
                             </router-link>
                         </td>
@@ -32,46 +32,34 @@
 </template>
 
 <script>
+    import { mapActions, mapGetters } from 'vuex';
+    import { addParticipant, setParticipants, updateParticipant } from "../store/action-types";
+
     export default {
-        data()
-        {
+        data() {
             return {
                 headers: [
-                    { text: 'Photo', value: 'photo' },
-                    { text: 'Name', value: 'first_name'},
-                    { text: 'Report subject', value: 'report_subject'},
-                    { text: 'Email', value: 'email'}
-                ],
-                participant: {
-                    photo: '',
-                    first_name: '',
-                    last_name: '',
-                    report_subject: '',
-                    email: ''
-                },
-                participants: [],
+                    {text: 'Photo', value: 'photo'},
+                    {text: 'Name', value: 'first_name'},
+                    {text: 'Report subject', value: 'report_subject'},
+                    {text: 'Email', value: 'email'}
+                ]
             }
         },
-        mounted()
-        {
-            this.getParticipants();
+        computed: {
+            ...mapGetters([
+                'getParticipants'
+            ])
+        },
+        mounted() {
+            this.setParticipants()
         },
         methods: {
-            getParticipants()
-            {
-                const headers = {
-                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-                }
-                axios.get('/api/list')
-                    .then(response => {
-                        console.log(response);
-                        this.participants = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-
-            }
+            ...mapActions({
+                setParticipants,
+                addParticipant,
+                updateParticipant
+            })
         }
 
     }

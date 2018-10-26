@@ -13,10 +13,8 @@
 
 use Illuminate\Http\Request;
 
-//Route::get('/{any}', 'ParticipantController@index')->where('any', '.*');
-Route::get('/{any}', function() {
-    return view('form');
-})->where('any', '[a-zA-Z]*');
+
+Route::get('/{any}', function() { return view('index'); })->where('any', '[a-zA-Z]*');
 
 //Auth::routes();
 //

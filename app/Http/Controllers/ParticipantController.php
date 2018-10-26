@@ -15,16 +15,6 @@ class ParticipantController extends Controller
         return response(Participant::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
-//    function create() {
-//        $countries = new Countries;
-//        $countries = $countries->all()->pluck('name.common')->toArray();
-//        return view('form', ['countries' => $countries, 'pcount' => Participant::where('hidden', '0')->count()]);
-//    }
-//
-//    function edit() {
-//        return view('addition', ['pcount' => Participant::all()->count()]);
-//    }
-
     function store(StoreParticipantRequest $request) {
         $data = $request->validated();
         $participant = new Participant;
@@ -60,17 +50,4 @@ class ParticipantController extends Controller
         return response(null, Response::HTTP_OK);
     }
 
-//    function hide(Request $request) {
-//        $email = $request->email;
-//        $participant = Participant::where('email', $email)->first();
-//
-//        if($participant->hidden == 1){
-//            $participant->hidden = 0;
-//        } else {
-//            $participant->hidden = 1;
-//        }
-//
-//
-//        $participant->save();
-//    }
 }
