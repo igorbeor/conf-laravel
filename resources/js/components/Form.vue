@@ -39,6 +39,7 @@
                         v-model="form.reportSubject"
                         :error-messages="reportSubjectErrors"
                         label="Report subject"
+                        box
                 ></v-textarea>
                 <v-autocomplete
                         label="Country"
@@ -52,12 +53,24 @@
                         {{ data.item }}
                     </template>
                 </v-autocomplete>
+                <!--<div class="v-input v-text-field v-text-field&#45;&#45;enclosed v-text-field&#45;&#45;outline theme&#45;&#45;light">-->
+                    <!--<div class="v-input__control">-->
+                        <!--<div class="v-input__slot">-->
+                            <!--<div class="v-text-field__slot">-->
+                <!--<vue-tel-input v-model="form.phone"-->
+                               <!--@onInput="onInput">-->
+                <!--</vue-tel-input>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="v-text-field__details"><div class="v-messages theme&#45;&#45;light"><div class="v-messages__wrapper"></div></div></div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <v-text-field
                         v-model="form.phone"
                         :error-messages="phoneErrors"
                         :prefix="phoneCode"
                         label="Phone number"
-                        mask="phone"
+                        mask="## ### ####"
                         class="phone_number"
                         required
                 ></v-text-field>
@@ -67,7 +80,9 @@
                         label="Email"
                         required
                 ></v-text-field>
-                <v-btn @click="submit">Next</v-btn>
+                <v-flex class="btn-row" row justify-end>
+                    <v-btn @click="submit">Next</v-btn>
+                </v-flex>
             </form>
         </v-container>
     </v-content>
@@ -124,17 +139,17 @@
                 },
                 email: {
                     required,
-                    email,
-                    isUnique(value) {   // TODO: Fix validation
-                        if (value === '') return true;
-
-                        return new Promise((resolve, reject) => {
-                            let existingEmails = this.getParticipants.map(participant => participant.email);
-                            setTimeout(() => {
-                                resolve(!existingEmails.includes(value));
-                            }, 350 + Math.random() * 300)
-                        });
-                    }
+                    email, // TODO: Fix validation
+                    // isUnique(value) {
+                    //     if (value === '') return true;
+                    //
+                    //     return new Promise((resolve, reject) => {
+                    //         let existingEmails = this.getParticipants.map(participant => participant.email);
+                    //         setTimeout(() => {
+                    //             resolve(!existingEmails.includes(value));
+                    //         }, 350 + Math.random() * 300)
+                    //     });
+                    // }
                 }
             }
         },
@@ -198,7 +213,7 @@
                 if (!this.$v.form.email.$dirty) return errors;
                 !this.$v.form.email.email && errors.push('Must be valid email.');
                 !this.$v.form.email.required && errors.push('Email subject is required.');
-                !this.$v.form.email.isUnique && errors.push('Email must be unique.');
+                // !this.$v.form.email.isUnique && errors.push('Email must be unique.');
                 return errors
             },
         },
@@ -218,6 +233,11 @@
                     return
                 }
                 this.addParticipant(this.form);
+                this.localStorage.formNumber = "2";
+                this.localStorage.email = this.form.email;
+            },
+            onInput({ number, isValid, country }) {
+                console.log(number, isValid, country);
             },
             ...mapActions({
                 setCountries,

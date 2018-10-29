@@ -9,12 +9,28 @@ window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import Vuelidate from 'vuelidate';
+import * as VueGoogleMaps from 'vue2-google-maps'
 import { store } from './store';
+import { apiKey } from './config/gmaps.config';
+import VueTelInput from 'vue-tel-input';
+import reactiveStorage from "vue-reactive-storage";
 
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(Vuelidate);
+Vue.use(VueTelInput);
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: apiKey,
+        libraries: 'places'
+    }
+});
+// Set initial values
+Vue.use(reactiveStorage, {
+    "formNumber": "1",
+    "email": ""
+});
 
 Vue.config.devtools = process.env.NODE_ENV !== 'production';
 Vue.config.performance = process.env.NODE_ENV !== 'production';

@@ -14,16 +14,7 @@ export const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     state: {
         participants: [],
-        participant: {
-            firstName: '',
-            lastName: '',
-            birthdate: '',
-            reportSubject: '',
-            country: '',
-            phone: '',
-            email: ''
-        },
-        countries: []
+        countries: [],
     },
     getters: {
         getParticipants (state) {

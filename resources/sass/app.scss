@@ -11,6 +11,8 @@
 @import '~vuetify/dist/vuetify.min.css';
 @import '~material-design-icons-iconfont/dist/material-design-icons.css';
 
+@import '~vue-tel-input/dist/vue-tel-input.css';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -36,14 +38,25 @@ img.photo {
   height: auto;
 }
 
+.vue-tel-input {
+    border: none!important;
+    width: 100%;
+    &:focus-within {
+        box-shadow: none!important;
+    }
+    ul {
+        z-index: 4;
+    }
+}
+
 .phone_number {
-  .v-text-field__prefix {
-    width: auto !important;
-  }
-  .v-label {
-    left: 54px !important;
-  }
-  .v-label--active {
-    left: 0px !important;
-  }
+    .v-text-field__prefix {
+        width: auto!important;
+    }
+    .v-label {
+        left: 50px!important;
+    }
+}
+.btn-row {
+    margin-left: 0px!important;
 }
