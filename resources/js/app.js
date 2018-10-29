@@ -25,10 +25,12 @@ Vue.config.performance = process.env.NODE_ENV !== 'production';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import App from './components/App.vue';
-import Form from './components/Form.vue';
+// import Form from './components/Form.vue';
 import Participants from './components/Participants.vue';
 import Test from './components/Test.vue';
-// Vue.component('app', './components/Form.vue');
+import RegistrationForm from './components/RegistrationForms';
+
+// Vue.component('main-form', './components/Form');
 // Vue.component('participants', './components/Participants.vue');
 // Vue.component('test', './components/Test.vue');
 
@@ -37,7 +39,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: Form,
+            component: RegistrationForm,
         },
         {
             path: '/participants',

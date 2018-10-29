@@ -12,8 +12,8 @@
                                 <img v-bind:src="`/storage/photos/${ props.item.photo != null ? props.item.photo : 'default.png' }`">
                             </v-avatar>
                         </td>
-                        <td>{{ props.item.first_name + ' ' + props.item.last_name }}</td>
-                        <td>{{ props.item.report_subject }}</td>
+                        <td>{{ props.item.firstName + ' ' + props.item.lastName }}</td>
+                        <td>{{ props.item.reportSubject }}</td>
                         <td>{{ props.item.email }}</td>
                     </template>
                     <template slot="footer">
@@ -40,8 +40,8 @@
             return {
                 headers: [
                     {text: 'Photo', value: 'photo'},
-                    {text: 'Name', value: 'first_name'},
-                    {text: 'Report subject', value: 'report_subject'},
+                    {text: 'Name', value: 'firstName'},
+                    {text: 'Report subject', value: 'reportSubject'},
                     {text: 'Email', value: 'email'}
                 ]
             }

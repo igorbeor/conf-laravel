@@ -18,10 +18,10 @@ class ParticipantController extends Controller
     function store(StoreParticipantRequest $request) {
         $data = $request->validated();
         $participant = new Participant;
-        $participant->first_name = $data['first_name'];
-        $participant->last_name = $data['last_name'];
+        $participant->firstName = $data['firstName'];
+        $participant->lastName = $data['lastName'];
         $participant->birthdate = $data['birthdate'];
-        $participant->report_subject = $data['report_subject'];
+        $participant->reportSubject = $data['reportSubject'];
         $participant->country = $data['country'];
         $participant->phone = $data['phone'];
         $participant->email = $data['email'];
@@ -42,7 +42,7 @@ class ParticipantController extends Controller
         $participant = Participant::where('email', $email)->first();
         $participant->company = $data['company'];
         $participant->position = $data['position'];
-        $participant->about_me = $data['about_me'];
+        $participant->aboutMe = $data['aboutMe'];
         $participant->photo = $file_name;
 
         $participant->save();

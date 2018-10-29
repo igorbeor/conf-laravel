@@ -16,7 +16,7 @@ class UpdateParticipantRequest extends FormRequest
         return [
             'company' => 'nullable|between:2,50',
             'position' => 'nullable|between:2,50',
-            'about_me' => 'nullable|between:10,255',
+            'aboutMe' => 'nullable|between:10,255',
             'photo' => 'nullable',
             'additional-email' => 'nullable|email'
         ];

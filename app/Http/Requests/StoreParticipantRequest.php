@@ -14,10 +14,10 @@ class StoreParticipantRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|alpha|between:2,50',
-            'last_name' => 'required|alpha|between:2,50',
+            'firstName' => 'required|alpha|between:2,50',
+            'lastName' => 'required|alpha|between:2,50',
             'birthdate' => 'required|date|after:01-01-1900|before:today',
-            'report_subject' => 'required|between:10,190',
+            'reportSubject' => 'required|between:10,190',
             'country' => 'required|between:2,100',
             'phone' => array('required', 'regex:/^\+?[^a-zA-Z]{5,}$/'),
             'email' => 'required|email|unique:participants,email'

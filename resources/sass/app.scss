@@ -35,3 +35,15 @@ img.photo {
   max-width: 100px;
   height: auto;
 }
+
+.phone_number {
+  .v-text-field__prefix {
+    width: auto !important;
+  }
+  .v-label {
+    left: 54px !important;
+  }
+  .v-label--active {
+    left: 0px !important;
+  }
+}

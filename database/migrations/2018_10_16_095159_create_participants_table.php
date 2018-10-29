@@ -15,16 +15,16 @@ class CreateParticipantsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->date('birthdate');
-            $table->text('report_subject');
+            $table->text('reportSubject');
             $table->string('country');
             $table->string('phone');
             $table->string('email')->unique();
             $table->string('company')->nullable();
             $table->string('position')->nullable();
-            $table->text('about_me')->nullable();
+            $table->text('aboutMe')->nullable();
             $table->string('photo')->nullable();
             $table->boolean('hidden')->default(false);
             $table->timestamps();

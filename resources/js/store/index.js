@@ -15,10 +15,10 @@ export const store = new Vuex.Store({
     state: {
         participants: [],
         participant: {
-            first_name: '',
-            last_name: '',
+            firstName: '',
+            lastName: '',
             birthdate: '',
-            report_subject: '',
+            reportSubject: '',
             country: '',
             phone: '',
             email: ''
@@ -60,7 +60,7 @@ export const store = new Vuex.Store({
                 console.log(error);
             }
             context.commit('MUTATE_SET_PARTICIPANTS', data);
-            console.log('Success!');
+            console.log('Success set participants!');
             console.log(data);
         },
         async [addParticipant] (context, payload) {
@@ -71,10 +71,10 @@ export const store = new Vuex.Store({
             try {
                 ({ data } = await axios.post('/api/participant/store', payload, headers));
             } catch (error) {
-                console.log(error);
+                console.log(error.response);
             }
             context.commit('MUTATE_ADD_PARTICIPANT', data);
-            console.log('Success!');
+            console.log('Success add participant!');
         },
         async [updateParticipant] (context, payload) {
             const headers = {
