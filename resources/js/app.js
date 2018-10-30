@@ -4,21 +4,35 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require('./bootstrap');
-
-window.Vue = require('vue');
+import 'es6-promise/auto';
+import axios from 'axios';
+import Vue from 'vue';
+import VueAuth from '@websanova/vue-auth';
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
+import VueAxios from 'vue-axios';
 import Vuelidate from 'vuelidate';
-import * as VueGoogleMaps from 'vue2-google-maps'
-import { store } from './store';
-import { apiKey } from './config/gmaps.config';
+import VeeValidate from 'vee-validate'
+import Vuex from 'vuex';
+import * as VueGoogleMaps from 'vue2-google-maps';
+import router from './router'
+import store from './store';
+import apiKey from './config/gmaps.config';
+import auth from './config/auth';
 import VueTelInput from 'vue-tel-input';
 import reactiveStorage from "vue-reactive-storage";
+import App from './components/App.vue';
+const SocialSharing = require('vue-social-sharing');
 
+window.Vue = Vue;
 
-Vue.use(Vuetify);
+Vue.router = router;
 Vue.use(VueRouter);
+
+Vue.use(Vuex);
+Vue.use(Vuetify);
 Vue.use(Vuelidate);
+Vue.use(VeeValidate);
 Vue.use(VueTelInput);
 Vue.use(VueGoogleMaps, {
     load: {
@@ -26,51 +40,24 @@ Vue.use(VueGoogleMaps, {
         libraries: 'places'
     }
 });
-// Set initial values
 Vue.use(reactiveStorage, {
     "formNumber": "1",
     "email": ""
 });
+Vue.use(SocialSharing);
+
+// Set Vue authentication
+Vue.use(VueAxios, axios);
+axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;
+Vue.use(VueAuth, auth);
 
 Vue.config.devtools = process.env.NODE_ENV !== 'production';
 Vue.config.performance = process.env.NODE_ENV !== 'production';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-import App from './components/App.vue';
-// import Form from './components/Form.vue';
-import Participants from './components/Participants.vue';
-import Test from './components/Test.vue';
-import RegistrationForm from './components/RegistrationForms';
-
-// Vue.component('main-form', './components/Form');
-// Vue.component('participants', './components/Participants.vue');
-// Vue.component('test', './components/Test.vue');
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: [
-        {
-            path: '/',
-            component: RegistrationForm,
-        },
-        {
-            path: '/participants',
-            component: Participants,
-        },
-        {
-            path: '/test',
-            component: Test,
-        }
-    ],
-});
+Vue.component('app', App);
 
 const app = new Vue({
     el: '#app',
     store,
-    render: h => h(App),
     router
 });

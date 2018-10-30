@@ -1,10 +1,11 @@
 <template>
     <v-layout>
-        <v-flex lg8 offset-lg2>
+        <v-flex lg8 md10 offset-lg2 offset-md1>
+            <top-bar></top-bar>
             <v-card>
                 <v-data-table
                         :headers="headers"
-                        :items="getParticipants"
+                        :items="participants"
                         hide-actions>
                     <template slot="items" slot-scope="props">
                         <td>
@@ -15,6 +16,12 @@
                         <td>{{ props.item.firstName + ' ' + props.item.lastName }}</td>
                         <td>{{ props.item.reportSubject }}</td>
                         <td>{{ props.item.email }}</td>
+                        <td v-if="$auth.check(2)">
+                            <input type="checkbox"
+                                   :checked="props.item.hidden ? 'checked' : ''"
+                                   v-on:click="hide(props.item.email)"
+                            />
+                        </td>
                     </template>
                     <template slot="footer">
                         <td>
@@ -29,24 +36,36 @@
             </v-card>
         </v-flex>
     </v-layout>
+    <!--v-if="$auth.check(2)" IF ADMIN-->
 </template>
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
-    import { addParticipant, setParticipants, updateParticipant } from "../store/action-types";
+    import {addParticipant, hideParticipant, setParticipants, updateParticipant} from '../store/action-types';
+    import TopBar from '../components/TopBar';
 
     export default {
+        components: {
+          TopBar
+        },
         data() {
             return {
                 headers: [
-                    {text: 'Photo', value: 'photo'},
-                    {text: 'Name', value: 'firstName'},
-                    {text: 'Report subject', value: 'reportSubject'},
-                    {text: 'Email', value: 'email'}
+                    {text: 'Photo', value: 'photo', sortable: false},
+                    {text: 'Name', value: 'firstName', sortable: false},
+                    {text: 'Report subject', value: 'reportSubject', sortable: false},
+                    {text: 'Email', value: 'email'},
+                    {text: '', align: 'right', sortable: false}
                 ]
             }
         },
         computed: {
+            participants: function () {
+                if (!this.$auth.check(2)) {
+                    return _.filter(this.getParticipants, participant => participant.hidden === 0);
+                }
+                return this.getParticipants;
+            },
             ...mapGetters([
                 'getParticipants'
             ])
@@ -55,10 +74,14 @@
             this.setParticipants()
         },
         methods: {
+            hide: function (email) {
+                this.hideParticipant(email);
+            },
             ...mapActions({
                 setParticipants,
                 addParticipant,
-                updateParticipant
+                updateParticipant,
+                hideParticipant
             })
         }
 

@@ -18,7 +18,7 @@ class UpdateParticipantRequest extends FormRequest
             'position' => 'nullable|between:2,50',
             'aboutMe' => 'nullable|between:10,255',
             'photo' => 'nullable',
-            'additional-email' => 'nullable|email'
+            'email' => 'nullable|email'
         ];
     }
 }

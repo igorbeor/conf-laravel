@@ -4,25 +4,36 @@
             <form>
                 <v-text-field
                         v-model="form.company"
-                        :error-messages="companyErrors"
+                        v-validate="'min:2|max:50'"
+                        :error-messages="errors.collect('company')"
+                        data-vv-name="company"
                         label="Company"
-                        required
                 ></v-text-field>
                 <v-text-field
                         v-model="form.position"
-                        :error-messages="positionErrors"
+                        v-validate="'min:2|max:50'"
+                        :error-messages="errors.collect('position')"
+                        data-vv-name="position"
                         label="Position"
-                        required
                 ></v-text-field>
                 <v-textarea
                         v-model="form.aboutMe"
-                        :error-messages="aboutMeErrors"
+                        v-validate="'min:10|max:190'"
+                        :error-messages="errors.collect('aboutMe')"
+                        data-vv-name="aboutMe"
                         label="About me"
                 ></v-textarea>
+                <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                <input
+                        type="file"
+                        style="display: none"
+                        ref="image"
+                        accept="image/*"
+                        @change="onFileChange"
+                >
                 <v-flex class="btn-row" row justify-end>
                     <v-btn @click="submit">Next</v-btn>
                 </v-flex>
-                <!-- Image upload: https://stackoverflow.com/questions/44989162/file-upload-in-vuetify-->
             </form>
         </v-container>
     </v-content>
@@ -34,64 +45,68 @@
     import {updateParticipant} from "../store/action-types";
 
     export default {
+        $_veeValidate: {
+            validator: 'new'
+        },
         data() {
             return {
                 form: {
                     company: '',
                     position: '',
-                    aboutMe: ''
-                }
-            }
-        },
-        validations: {
-            form: {
-                company: {
-                    minLength: minLength(2),
-                    maxLength: maxLength(50)
+                    aboutMe: '',
+                    email: '',
+                    photo: ''
                 },
-                position: {
-                    minLength: minLength(2),
-                    maxLength: maxLength(50)
-                },
-                aboutMe: {
-                    minLength: minLength(10),
-                    maxLength: maxLength(190)
-                }
-            }
-        },
-        computed: {
-            companyErrors () {
-                const errors = [];
-                if (!this.$v.form.company.$dirty) return errors;
-                !this.$v.form.company.minLength && errors.push('Company name must be at least 2 characters.');
-                !this.$v.form.company.maxLength && errors.push('Company name must be at most 50 characters long.');
-                return errors
-            },
-            positionErrors () {
-                const errors = [];
-                if (!this.$v.form.position.$dirty) return errors;
-                !this.$v.form.position.minLength && errors.push('Position must be at least 2 characters.');
-                !this.$v.form.position.maxLength && errors.push('Position must be at most 50 characters long.');
-                return errors
-            },
-            aboutMeErrors () {
-                const errors = [];
-                if (!this.$v.form.aboutMe.$dirty) return errors;
-                !this.$v.form.aboutMe.minLength && errors.push('About me be at least 10 characters.');
-                !this.$v.form.aboutMe.maxLength && errors.push('About me must be at most 190 characters long.');
-                return errors
+                imageName: ''
             }
         },
         methods: {
-            submit: function () {
-                this.$v.form.$touch();
-                if(this.$v.form.$error) {
-                    console.log('Error validation');
-                    return
-                }
-                this.updateParticipant(this.form);
-                this.localStorage.formNumber = "2";
-                this.localStorage.email = this.form.email;
+            submit() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        this.form.email = this.localStorage.email;
+                        this.updateParticipant(this.form);
+                        this.localStorage.formNumber = "3";
+                        return;
+                    }
+
+                    console.log('Correct them errors!');
+                });
+            },
+            pickFile () {
+                this.$refs.image.click ()
+            },
+            // onFilePicked (e) {
+            //     const files = e.target.files;
+            //     if(files[0] !== undefined) {
+            //         this.imageName = files[0].name;
+            //         if(this.imageName.lastIndexOf('.') <= 0) {
+            //             return;
+            //         }
+            //         const fr = new FileReader ();
+            //         fr.readAsDataURL(files[0]);
+            //         fr.addEventListener('load', () => {
+            //             this.form.photo = files;
+            //         })
+            //     } else {
+            //         this.imageName = '';
+            //         this.form.photo = '';
+            //     }
+            // },
+            onFileChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+            },
+            createImage(file) {
+                var reader = new FileReader();
+                // var vm = this;
+
+                reader.onload = (e) => {
+                    this.form.photo = e.target.result;
+                };
+                reader.readAsDataURL(file);
             },
             ...mapActions({
                 updateParticipant

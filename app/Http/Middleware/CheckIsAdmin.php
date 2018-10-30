@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Closure;
 
-class IsAdmin
+class CheckIsAdmin
 {
     /**
      * Handle an incoming request.
@@ -14,9 +15,11 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->isAdmin()) {
+        if(Auth::user()->role === 2) {
             return $next($request);
         }
-        return redirect('home');
+        else {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
     }
 }

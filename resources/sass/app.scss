@@ -56,7 +56,30 @@ img.photo {
     .v-label {
         left: 50px!important;
     }
+    .v-label--active {
+      left: 0px!important;
+    }
+;
 }
 .btn-row {
     margin-left: 0px!important;
+}
+.social-net {
+    font-size: 24px;
+}
+
+@media screen and (min-width: 960px) and (max-width: 1264px)  {
+  .social-net {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 960px)  {
+  .social-net {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 600px)  {
+  .social-net {
+    font-size: 10px;
+  }
 }

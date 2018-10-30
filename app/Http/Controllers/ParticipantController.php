@@ -37,8 +37,12 @@ class ParticipantController extends Controller
         if ($request->hasFile('photo')) {
             $request->file('photo')->store('photos');
             $file_name = $request->file('photo')->hashName();
-        }
-        $email = $data['additional-email'];
+        } // TODO: Fix upload photo in storage
+//        $image = $request->image;  // your base64 encoded
+//        $image = str_replace('data:image/png;base64,', '', $image);
+//        $image = str_replace(' ', '+', $image);
+//        $imageName = str_random(10).'.'.'png';
+        $email = $data['email'];
         $participant = Participant::where('email', $email)->first();
         $participant->company = $data['company'];
         $participant->position = $data['position'];
@@ -49,5 +53,17 @@ class ParticipantController extends Controller
 
         return response(null, Response::HTTP_OK);
     }
+
+    function hide(Request $request) {
+        $email = $request->email;
+        $participant = Participant::where('email', $email)->first();
+        if($participant->hidden == 1){
+            $participant->hidden = 0;
+        } else {
+            $participant->hidden = 1;
+        }
+        $participant->save();
+    }
+
 
 }

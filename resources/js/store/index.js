@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {
-    MUTATE_ADD_PARTICIPANT,
+    MUTATE_ADD_PARTICIPANT, MUTATE_HIDE_PARTICIPANT,
     MUTATE_SET_COUNTRIES,
     MUTATE_SET_PARTICIPANTS,
     MUTATE_UPDATE_PARTICIPANT
 } from "./mutation-types";
-import { addParticipant, setCountries, setParticipants, updateParticipant } from "./action-types";
+import {addParticipant, hideParticipant, setCountries, setParticipants, updateParticipant} from "./action-types";
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store({
+const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     state: {
         participants: [],
@@ -38,52 +38,45 @@ export const store = new Vuex.Store({
         [MUTATE_SET_COUNTRIES] (state, payload) {
             state.countries = payload;
         },
+        [MUTATE_HIDE_PARTICIPANT] (state, payload) {
+            let index = _.findIndex(state.participants, {email: payload});
+            let participant = state.participants[index];
+            participant['hidden'] = participant['hidden'] === 0 ? 1 : 0;
+            state.participants.splice(index, 1, participant);
+        }
     },
     actions: {
         async [setParticipants] (context, payload) {
-            const headers = {
-                'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-            };
             let data;
             try{
-                ({ data } = await axios.get('/api/list', headers));
+                ({ data } = await axiosAPI.get('/list'));
             } catch (error) {
                 console.log(error);
             }
             context.commit('MUTATE_SET_PARTICIPANTS', data);
-            console.log('Success set participants!');
-            console.log(data);
         },
         async [addParticipant] (context, payload) {
-            const headers = {
-                'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-            };
             let data;
             try {
-                ({ data } = await axios.post('/api/participant/store', payload, headers));
+                ({ data } = await axiosAPI.post('/participant/store', payload));
             } catch (error) {
-                console.log(error.response);
+                console.log(error);
             }
             context.commit('MUTATE_ADD_PARTICIPANT', data);
-            console.log('Success add participant!');
         },
         async [updateParticipant] (context, payload) {
-            const headers = {
-                'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-            };
             let data;
             try {
-                ({ data } = await axios.get('/api/participant/store', payload, headers));
+                ({ data } = await axiosAPI.post('/participant/update', payload));
             } catch (error) {
                 console.log(error);
             }
             context.commit('MUTATE_UPDATE_PARTICIPANT', data);
-            console.log('Success!');
         },
         async [setCountries] (context, payload) {
             let countries;
             try{
-                let { data } = await axios.get('https://restcountries.eu/rest/v2/all');
+                let { data } = await axiosClear.get('https://restcountries.eu/rest/v2/all');
                 countries = _.map(data, (country) => {
                     return {
                         'name': country.name,
@@ -94,8 +87,18 @@ export const store = new Vuex.Store({
                 console.log(error);
             }
             context.commit('MUTATE_SET_COUNTRIES', countries);
-            console.log('Success!');
-            console.log(countries);
         },
+        async [hideParticipant] (context, payload) {
+            let sendData = {email: payload}
+            let data;
+            try {
+                ({ data } = await axiosAPI.post('/participant/hide', sendData));
+            } catch (error) {
+                console.log(error);
+            }
+            context.commit('MUTATE_HIDE_PARTICIPANT', payload);
+        }
     }
 });
+
+export default store;
